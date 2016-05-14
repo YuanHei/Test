@@ -33,63 +33,35 @@
 
 
 #include <iostream>
-#include <cstdio>
 using namespace std;
-
-void print(char a, char b, char c)
-{
-	int value = 0;
-	int i = 0;
-	int num[255] = { 0 };
-	int k = 0;
-	if(a == '0' && b == '0' && c == '0')
-	{
-		cout << "0 0 0" << endl;
-		return;
-	}
-    cout << a << b << c << " ";
-	if(c >= '0' && c <= '9')
-	{
-		value += (c-'0');
-	}
-	else
-	{
-		value += (c-'A'+10);
-	}
-	if(b >= '0' && b <= '9')
-	{
-		value += (b-'0')*16;
-	}
-	else
-	{
-		value += (b-'A'+10)*16;
-	}
-	if(a >= '0' && a <= '9')
-	{
-		value += (a-'0')*16*16;
-	}
-	else
-	{
-		value += (a-'A'+10)*16*16;
-	}
-	cout << value << " ";
-	while(value)
-	{
-		num[k++] = value % 8;
-		value /= 8; 
-	}
-	for(i = k-1; i >= 0; --i)
-	{
-		cout << num[i];
-	}
-	cout << endl;
-}
 
 int main()
 {
-	char a, b, c;
-	cin >> a >> b >> c;
-	print(a, b, c);
-
+	int N;
+	int PASCAL[100][100] = { 0 };
+	PASCAL[0][1] = 1; 
+	cin >> N;
+	for (int i = 1; i < N + 1; ++i)
+	{
+		for (int j = 1; j < i + 2; ++j)
+		{
+			if (j == 1 && j == i+1)
+			{
+				PASCAL[i][j] = 1;
+			}
+			else
+			{
+				PASCAL[i][j] = PASCAL[i - 1][j - 1] + PASCAL[i - 1][j];
+			}
+		}
+	}
+	for (int i = 0; i < N + 1; ++i)
+	{
+		for (int j = 1; j < i + 2; ++j)
+		{
+			cout << PASCAL[i][j] << " ";
+		}
+		cout << endl;
+	}
 	return 0;
 }
